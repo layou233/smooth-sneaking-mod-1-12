@@ -78,7 +78,7 @@ minecraft {
     useDependencyAccessTransformers.set(propertyBool('use_dependency_at_files'))
 
     username.set(propertyString('minecraft_username'))
-    
+
     // Add any additional tweaker classes here
     extraTweakClasses.addAll(propertyStringList('extra_tweak_classes'))
 
@@ -94,7 +94,7 @@ minecraft {
 
     if (propertyBool('use_tags')) {
         if (file('tags.properties').exists()) {
-            Properties props = new Properties().tap {  it.load(file('tags.properties').newInputStream()); it }
+            Properties props = new Properties().tap { it.load(file('tags.properties').newInputStream()); it }
             if (!props.isEmpty()) {
                 injectedTags.set(props.collectEntries { k, v -> [(k): interpolate(v)] })
             }
@@ -107,6 +107,9 @@ repositories {
         name 'CleanroomMC Maven'
         url 'https://maven.cleanroommc.com'
     }
+//    maven {
+//        url "https://maven.outlands.top/releases/"
+//    }
 }
 
 dependencies {
@@ -114,7 +117,7 @@ dependencies {
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
         // Workaround for https://github.com/bsideup/jabel/issues/174
         annotationProcessor 'net.java.dev.jna:jna-platform:5.13.0'
-        compileOnly ('com.github.bsideup.jabel:jabel-javac-plugin:1.0.0') {
+        compileOnly('com.github.bsideup.jabel:jabel-javac-plugin:1.0.0') {
             transitive = false
         }
         // Allow jdk.unsupported classes like sun.misc.Unsafe, workaround for JDK-8206937 and fixes crashes in tests
@@ -130,15 +133,16 @@ dependencies {
     }
     if (propertyBool('use_mixins')) {
         String mixin = modUtils.enableMixins("zone.rong:mixinbooter:${propertyString('mixin_booter_version')}", propertyString('mixin_refmap'))
-        api (mixin) {
+        api(mixin) {
             transitive = false
         }
         annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
         annotationProcessor 'com.google.guava:guava:24.1.1-jre'
         annotationProcessor 'com.google.code.gson:gson:2.8.6'
-        annotationProcessor (mixin) {
+        annotationProcessor(mixin) {
             transitive = false
         }
+        //annotationProcessor ('com.cleanroommc:sponge-mixin:0.17.6+mixin.0.8.5')
     }
     if (propertyBool('enable_junit_testing')) {
         testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
@@ -181,7 +185,7 @@ processResources {
                 'mixin_package': propertyString('mixin_package')
         )
     }
-    
+
     if (propertyBool('use_access_transformer')) {
         rename '(.+_at.cfg)', 'META-INF/$1'
     }
@@ -207,7 +211,7 @@ jar {
         attributes(attribute_map)
     }
     // Add all embedded dependencies into the jar
-    from(provider{ configurations.embed.collect {it.isDirectory() ? it : zipTree(it)} })
+    from(provider { configurations.embed.collect { it.isDirectory() ? it : zipTree(it) } })
 }
 
 idea {
