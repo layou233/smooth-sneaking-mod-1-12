@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@IFMLLoadingPlugin.Name(Tags.MOD_ID)
+@IFMLLoadingPlugin.Name("SmoothSneakingMod")
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 public class EarlyMixinInit implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
@@ -18,12 +18,12 @@ public class EarlyMixinInit implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
     @Override
     public List<String> getMixinConfigs() {
-        return Collections.singletonList("mixins." + Tags.MOD_ID + ".json");
+        return Collections.singletonList("mixins.smoothsneakingmod.json");
     }
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[0];
+        return null;
     }
 
     @Override
